@@ -1,0 +1,27 @@
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "export": "next export -o dist",
+    "netlify": "yarn build && yarn export"
+  },
+  "dependencies": {
+    "@chakra-ui/core": "^0.6.1",
+    "@emotion/core": "^10.0.27",
+    "@emotion/styled": "^10.0.27",
+    "emotion-theming": "^10.0.27",
+    "formik": "^2.1.4",
+    "next": "^9.2.2",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-simple-img": "^2.3.9",
+    "yup": "^0.28.1"
+  },
+  "devDependencies": {
+    "@types/node": "^13.7.6",
+    "@types/react": "^16.9.23",
+    "@types/react-dom": "^16.9.5",
+    "typescript": "^3.8.2"
+  }
+}
