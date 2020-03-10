@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from 'react'
-import { Spinner, Box, Flex, Button, Text } from '@chakra-ui/core'
+import { Box, Flex, Button, Text } from '@chakra-ui/core'
 import Router from 'next/router'
+import NProgress from 'nprogress'
 
 import { User } from '../@types/data'
-import { isEmpty } from '../utils/isEmpty'
 import { Card } from '../components/Card'
+
+let timeout: any
+
+const start = () => {
+  timeout = setTimeout(NProgress.start, 300)
+}
+
+const done = () => {
+  clearTimeout(timeout)
+  NProgress.done()
+}
 
 export default () => {
   const [user, setUser] = useState<User>()
@@ -13,6 +24,8 @@ export default () => {
   useEffect(() => {
     const fetchData = async () => {
       let data: any
+
+      start()
 
       try {
         const res = await fetch(`http://localhost:1323/student`, {
@@ -25,7 +38,10 @@ export default () => {
 
         data = await res.json()
       } catch (_) {
+        done()
         setFetchError('An error occured')
+      } finally {
+        done()
       }
 
       setUser(data)
@@ -34,10 +50,14 @@ export default () => {
     fetchData()
   }, [])
 
-  if (isEmpty(user)) {
+  if (!user) {
+    return <Card>&nbsp</Card>
+  }
+
+  if (fetchError) {
     return (
       <Card>
-        <Spinner />
+        <Text>มีข้อผิดพลาดเกิดขึ้น ไม่สามารถตรวจผลสอบได้ ณ ขณะนี้</Text>
       </Card>
     )
   }
@@ -49,40 +69,40 @@ export default () => {
           <Box as="span" fontWeight="bold">
             เลขประจำตัวสอบ:{' '}
           </Box>
-          {user.ID}
+          {user?.ID}
         </Text>
         <Text>
           <Box as="span" fontWeight="bold">
             ชื่อ:{' '}
           </Box>
-          {user.FirstName}
+          {user?.FirstName}
         </Text>
         <Text>
           <Box as="span" fontWeight="bold">
             นามสกุล:{' '}
           </Box>
-          {user.LastName}
+          {user?.LastName}
         </Text>
         <Text>
           <Box as="span" fontWeight="bold">
             ประเภท:{' '}
           </Box>
-          {user.ExamType}
+          {user?.ExamType}
         </Text>
         <Text>
           <Box as="span" fontWeight="bold">
             แผนการเรียน:{' '}
           </Box>
-          {user.Plan}
+          {user?.Plan}
         </Text>
         <Box textAlign="center" pt={4}>
-          {user.Status ? (
+          {user?.Status ? (
             <Box>
               <Text
                 color="green.500"
                 fontFamily="heading"
                 fontWeight="bold"
-                fontSize="3xl"
+                fontSize={['2xl', '3xl']}
               >
                 ผ่านการสอบคัดเลือก
               </Text>
@@ -90,16 +110,16 @@ export default () => {
                 color="green.500"
                 fontFamily="heading"
                 fontWeight="bold"
-                fontSize="2xl"
+                fontSize={['xl', '2xl']}
               >
                 ลำดับที่: {user.Rank}
               </Text>
-              <Text pt={2} fontSize="md">
+              <Text pt={2} fontSize={['sm', 'md']}>
                 ให้ผู้มีสิทธิ์เข้าศึกษา รายงานตัวผ่านระบบออนไลน์ <br />
                 ภายในวันและเวลาที่กำหนด หากไม่รายงานตัวถือว่าสละสิทธิ์
               </Text>
               <Text
-                fontSize="sm"
+                fontSize={['xs', 'sm']}
                 color="gray.500"
                 wordBreak="normal"
                 pt={4}
