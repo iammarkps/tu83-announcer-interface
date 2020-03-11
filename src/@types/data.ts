@@ -7,4 +7,5 @@ export interface User {
   ExamType: string
   Status: boolean
   Rank: number
+  Confirmed: boolean
 }
