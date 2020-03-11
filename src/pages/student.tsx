@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Box,
   Flex,
@@ -45,6 +45,12 @@ const getStatus = (user: User) => {
 
 export default ({ user, setRefetch, fetchError }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+
+  useEffect(() => {
+    if (user?.ID === '') {
+      Router.push('/')
+    }
+  }, [user])
 
   if (!user) {
     return <Card> </Card>
