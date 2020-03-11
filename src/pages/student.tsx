@@ -19,6 +19,7 @@ import Router from 'next/router'
 import NProgress from 'nprogress'
 
 import { Card } from '../components/Card'
+import { User } from '../@types/data'
 
 let timeout: any
 
@@ -29,6 +30,17 @@ const start = () => {
 const done = () => {
   clearTimeout(timeout)
   NProgress.done()
+}
+
+const getStatus = (user: User) => {
+  if (
+    user?.Status === 'ผ่านการสอบคัดเลือกทั่วไป' ||
+    user?.Status === 'ผ่านการสอบคัดเลือก'
+  ) {
+    return true
+  }
+
+  return false
 }
 
 export default ({ user, setRefetch, fetchError }) => {
@@ -59,6 +71,7 @@ export default ({ user, setRefetch, fetchError }) => {
           <Box as="span" fontWeight="bold">
             ชื่อ:{' '}
           </Box>
+          {user?.Prefix}
           {user?.FirstName}
         </Text>
         <Text>
@@ -80,7 +93,7 @@ export default ({ user, setRefetch, fetchError }) => {
           {user?.Plan}
         </Text>
         <Box textAlign="center" pt={4}>
-          {user?.Status ? (
+          {getStatus(user) ? (
             <Box>
               <Text
                 color="green.500"
@@ -88,7 +101,7 @@ export default ({ user, setRefetch, fetchError }) => {
                 fontWeight="bold"
                 fontSize={['2xl', '3xl']}
               >
-                ผ่านการสอบคัดเลือก
+                {user?.status}
               </Text>
               <Text
                 color="green.500"
