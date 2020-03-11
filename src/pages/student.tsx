@@ -101,7 +101,7 @@ export default ({ user, setRefetch, fetchError }) => {
                 fontWeight="bold"
                 fontSize={['2xl', '3xl']}
               >
-                {user?.status}
+                {user?.Status}
               </Text>
               {user?.Rank && (
                 <Text
