@@ -229,7 +229,7 @@ export default ({ user, setRefetch, fetchError }) => {
         >
           ย้อนกลับ
         </Button>
-        {!user.Confirmed && (
+        {!user.Confirmed && getStatus(user) && (
           <Button
             mt={4}
             fontFamily="heading"
