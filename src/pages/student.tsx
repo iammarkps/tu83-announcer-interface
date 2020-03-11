@@ -11,7 +11,9 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-  ModalFooter
+  ModalFooter,
+  List,
+  ListItem
 } from '@chakra-ui/core'
 import Router from 'next/router'
 import NProgress from 'nprogress'
@@ -98,26 +100,37 @@ export default ({ user, setRefetch, fetchError }) => {
               </Text>
               {user.Confirmed ? (
                 <Text fontFamily="heading" mt={4} fontWeight="semibold">
-                  รายงานตัวเสร็จสิ้น
+                  รายงานตัวและยืนยันเสร็จสิ้น
                 </Text>
               ) : (
                 <React.Fragment>
                   <Text pt={2} fontSize={['sm', 'md']}>
-                    ให้ผู้มีสิทธิ์เข้าศึกษา รายงานตัวผ่านระบบออนไลน์ <br />
-                    ภายในวันและเวลาที่กำหนด หากไม่รายงานตัวถือว่าสละสิทธิ์
+                    ให้ผู้ผ่านการคัดเลือก กดปุ่มรายงานตัวและยืนยัน <br />
+                    ผ่านระบบออนไลน์ ภายในวันและเวลาที่กำหนด <br />
+                    หากไม่รายงานตัวถือว่าสละสิทธิ์
                   </Text>
 
                   <Modal isOpen={isOpen} onClose={onClose} isCentered>
                     <ModalOverlay />
                     <ModalContent>
                       <ModalHeader fontFamily="heading">
-                        ยืนยันสิทธิ์เข้าศึกษาต่อ
+                        รายงานตัวและยืนยัน
                       </ModalHeader>
                       <ModalCloseButton />
                       <ModalBody>
-                        เมื่อยืนยันสิทธิ์แล้ว จะไม่สามารถเปลี่ยนแปลงได้
-                        โดยหากนักเรียนมีความประสงค์จะเข้าศึกษาต่อ
-                        นักเรียนต้องยืนยันสิทธิ์ภายในวันที่ 15 มีนาคม 2563
+                        <List styleType="disc">
+                          <ListItem>
+                            รายงานตัวและยืนยันออนไลน์วันที่ 12 - 15 มีนาคม 2563
+                          </ListItem>
+                          <ListItem>
+                            ผู้ปกครองนำนักเรียนมามอบตัวในวันที่ 18 มีนาคม 2563
+                            เวลา 08:30 - 16:30 น. ณ หอประชุมใหญ่
+                            โรงเรียนเตรียมอุดมศึกษา
+                          </ListItem>
+                          <ListItem color="red.600">
+                            หากไม่รายงานตามวันและเวลาที่กำหนด ถือว่าสละสิทธิ์
+                          </ListItem>
+                        </List>
                       </ModalBody>
                       <ModalFooter fontFamily="heading">
                         <Button variant="ghost" mr={3} onClick={onClose}>
@@ -206,8 +219,9 @@ export default ({ user, setRefetch, fetchError }) => {
             fontFamily="heading"
             variantColor="teal"
             onClick={onOpen}
+            fontSize={['sm', 'md']}
           >
-            รายงานตัว
+            รายงานตัวและยืนยัน
           </Button>
         )}
       </Flex>

@@ -19,9 +19,8 @@ import Router from 'next/router'
 import { Card } from '../components/Card'
 
 const LoginSchema = Yup.object().shape({
-  id: Yup.string().required('โปรดกรอกเลขที่นั่งสอบ'),
-
-  ctz_id: Yup.string().required('โปรดกรอกเลขประจำตัวประชาชน / Passport Number')
+  ctz_id: Yup.string().required('โปรดกรอกเลขประจำตัวประชาชน / Passport Number'),
+  phone: Yup.string().required('โปรดกรอกเบอร์โทรศัพท์มือถือ')
 })
 
 export default ({ setRefetch }) => {
@@ -32,12 +31,12 @@ export default ({ setRefetch }) => {
       <Heading size="md">ประกาศผลการสอบคัดเลือก</Heading>
       <Box mt={2} fontFamily="heading">
         <Formik
-          initialValues={{ id: '', ctz_id: '' }}
+          initialValues={{ ctz_id: '', phone: '' }}
           validationSchema={LoginSchema}
           onSubmit={async (values, actions) => {
             let data: any
-
             actions.setSubmitting(true)
+
             try {
               const res = await fetch(
                 `https://api.announce.triamudom.ac.th:1323/login`,
@@ -70,26 +69,9 @@ export default ({ setRefetch }) => {
         >
           {props => (
             <form onSubmit={props.handleSubmit}>
-              <Field name="id">
-                {({ field, form }) => (
-                  <FormControl isInvalid={form.errors.id && form.touched.id}>
-                    <FormLabel htmlFor="id">เลขที่นั่งสอบ</FormLabel>
-                    <InputGroup>
-                      <InputLeftElement
-                        children={<Icon name="edit" color="gray.300" />}
-                      />
-                      <Input {...field} id="id" />
-                    </InputGroup>
-                    <FormErrorMessage>{form.errors.id}</FormErrorMessage>
-                  </FormControl>
-                )}
-              </Field>
               <Field name="ctz_id">
                 {({ field, form }) => (
-                  <FormControl
-                    isInvalid={form.errors.phone && form.touched.phone}
-                    mt={4}
-                  >
+                  <FormControl isInvalid={form.errors.id && form.touched.id}>
                     <FormLabel htmlFor="ctz_id">
                       เลขบัตรประจำตัวประชาชน / Passport Number
                     </FormLabel>
@@ -98,6 +80,23 @@ export default ({ setRefetch }) => {
                         children={<Icon name="edit" color="gray.300" />}
                       />
                       <Input {...field} id="ctz_id" />
+                    </InputGroup>
+                    <FormErrorMessage>{form.errors.id}</FormErrorMessage>
+                  </FormControl>
+                )}
+              </Field>
+              <Field name="phone">
+                {({ field, form }) => (
+                  <FormControl
+                    isInvalid={form.errors.phone && form.touched.phone}
+                    mt={4}
+                  >
+                    <FormLabel htmlFor="phone">เบอร์โทรศัพท์</FormLabel>
+                    <InputGroup>
+                      <InputLeftElement
+                        children={<Icon name="edit" color="gray.300" />}
+                      />
+                      <Input {...field} id="phone" />
                     </InputGroup>
                     <FormErrorMessage>{form.errors.phone}</FormErrorMessage>
                   </FormControl>
