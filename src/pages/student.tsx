@@ -103,14 +103,17 @@ export default ({ user, setRefetch, fetchError }) => {
               >
                 {user?.status}
               </Text>
-              <Text
-                color="green.500"
-                fontFamily="heading"
-                fontWeight="bold"
-                fontSize={['xl', '2xl']}
-              >
-                ลำดับที่: {user.Rank}
-              </Text>
+              {user?.Rank && (
+                <Text
+                  color="green.500"
+                  fontFamily="heading"
+                  fontWeight="bold"
+                  fontSize={['xl', '2xl']}
+                >
+                  ลำดับที่: {user?.Rank}
+                </Text>
+              )}
+
               {user.Confirmed ? (
                 <Text fontFamily="heading" mt={4} fontWeight="semibold">
                   รายงานตัวและยืนยันเสร็จสิ้น
