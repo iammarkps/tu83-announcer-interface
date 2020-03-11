@@ -24,7 +24,7 @@ const LoginSchema = Yup.object().shape({
   ctz_id: Yup.string().required('โปรดกรอกเลขประจำตัวประชาชน / Passport Number')
 })
 
-export default () => {
+export default ({ setRefetch }) => {
   const [fetchError, setFetchError] = useState('')
 
   return (
@@ -39,14 +39,17 @@ export default () => {
 
             actions.setSubmitting(true)
             try {
-              const res = await fetch(`http://localhost:1323/login`, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(values),
-                credentials: 'include'
-              })
+              const res = await fetch(
+                `https://api.announce.triamudom.ac.th:1323/login`,
+                {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(values),
+                  credentials: 'include'
+                }
+              )
 
               data = await res.json()
             } catch (_) {
@@ -54,6 +57,7 @@ export default () => {
             }
 
             if (data !== 'Unauthorized') {
+              setRefetch(true)
               Router.push('/student')
             } else {
               setFetchError(

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import {
   Box,
   Flex,
@@ -16,7 +16,6 @@ import {
 import Router from 'next/router'
 import NProgress from 'nprogress'
 
-import { User } from '../@types/data'
 import { Card } from '../components/Card'
 
 let timeout: any
@@ -30,46 +29,11 @@ const done = () => {
   NProgress.done()
 }
 
-export default () => {
-  const [user, setUser] = useState<User>()
-  const [fetchError, setFetchError] = useState('')
+export default ({ user, setRefetch, fetchError }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [refetch, setRefetch] = useState(true)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      let data: any
-
-      start()
-
-      try {
-        const res = await fetch(`http://localhost:1323/student`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          credentials: 'include'
-        })
-
-        data = await res.json()
-      } catch (_) {
-        done()
-        setFetchError('An error occured')
-      } finally {
-        done()
-        setRefetch(false)
-      }
-
-      setUser(data)
-    }
-
-    if (refetch) {
-      fetchData()
-    }
-  }, [refetch])
 
   if (!user) {
-    return <Card>&nbsp</Card>
+    return <Card> </Card>
   }
 
   if (fetchError) {
@@ -168,7 +132,7 @@ export default () => {
 
                             try {
                               const res = await fetch(
-                                `http://localhost:1323/confirm`,
+                                `https://api.announce.triamudom.ac.th:1323/confirm`,
                                 {
                                   method: 'POST',
                                   headers: {
@@ -181,7 +145,6 @@ export default () => {
                               data = await res.json()
                             } catch (_) {
                               done()
-                              setFetchError('An error occured')
                             } finally {
                               done()
                             }
@@ -230,7 +193,7 @@ export default () => {
       <Flex direction="row" justify="space-between" align="flex-end" pt={2}>
         <Button
           mt={4}
-          onClick={() => logout(setFetchError)}
+          onClick={() => logout()}
           fontFamily="heading"
           variant="link"
           color="gray.800"
@@ -252,19 +215,15 @@ export default () => {
   )
 }
 
-const logout = async (
-  setFetchError: React.Dispatch<React.SetStateAction<string>>
-) => {
+const logout = async () => {
   try {
-    await fetch(`http://localhost:1323/logout`, {
+    await fetch(`https://api.announce.triamudom.ac.th:1323/logout`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
       },
       credentials: 'include'
     })
-  } catch (_) {
-    setFetchError('An error occured')
   } finally {
     Router.push('/')
   }
