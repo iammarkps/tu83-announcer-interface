@@ -212,6 +212,7 @@ export default ({ user, setRefetch, fetchError }) => {
             variantColor="teal"
             onClick={onOpen}
             fontSize={['sm', 'md']}
+            isDisabled
           >
             รายงานตัวและยืนยัน
           </Button>
