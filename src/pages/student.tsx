@@ -158,7 +158,37 @@ export default ({ user, setRefetch, fetchError }) => {
                         <Button variant="ghost" mr={3} onClick={onClose}>
                           ปิด
                         </Button>
-                        <Button variantColor="pink" isDisabled>
+                        <Button
+                          variantColor="pink"
+                          onClick={async () => {
+                            let data: any
+
+                            start()
+
+                            try {
+                              const res = await fetch(
+                                `https://api.announce.triamudom.ac.th:1323/confirm`,
+                                {
+                                  method: 'POST',
+                                  headers: {
+                                    'Content-Type': 'application/json'
+                                  },
+                                  credentials: 'include'
+                                }
+                              )
+
+                              data = await res.json()
+                            } catch (_) {
+                              done()
+                            } finally {
+                              done()
+                            }
+
+                            if (data) {
+                              setRefetch(true)
+                            }
+                          }}
+                        >
                           ยืนยันสิทธิ์
                         </Button>
                       </ModalFooter>
@@ -212,7 +242,6 @@ export default ({ user, setRefetch, fetchError }) => {
             variantColor="teal"
             onClick={onOpen}
             fontSize={['sm', 'md']}
-            isDisabled
           >
             รายงานตัวและยืนยัน
           </Button>
