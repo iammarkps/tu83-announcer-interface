@@ -35,7 +35,8 @@ const done = () => {
 const getStatus = (user: User) => {
   if (
     user?.Status === 'ผ่านการสอบคัดเลือกทั่วไป' ||
-    user?.Status === 'ผ่านการสอบคัดเลือก'
+    user?.Status === 'ผ่านการสอบคัดเลือก' ||
+    user?.Status === 'ผ่านการคัดเลือกเงื่อนไขพิเศษ'
   ) {
     return true
   }
