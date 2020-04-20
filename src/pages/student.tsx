@@ -13,7 +13,7 @@ import {
   ModalBody,
   ModalFooter,
   List,
-  ListItem
+  ListItem,
 } from '@chakra-ui/core'
 import Router from 'next/router'
 import NProgress from 'nprogress'
@@ -143,7 +143,7 @@ export default ({ user, setRefetch, fetchError }) => {
                       <ModalBody>
                         <List styleType="disc">
                           <ListItem>
-                            รายงานตัวและยืนยันออนไลน์วันที่ 10 - 17 เมษายน 2563{' '}
+                            รายงานตัวและยืนยันออนไลน์วันที่ 20 - 27 เมษายน 2563{' '}
                           </ListItem>
                           <ListItem>
                             ชำระเงินค่าบำรุงการศึกษา จำนวน 6,450 บาท
@@ -176,9 +176,9 @@ export default ({ user, setRefetch, fetchError }) => {
                                 {
                                   method: 'POST',
                                   headers: {
-                                    'Content-Type': 'application/json'
+                                    'Content-Type': 'application/json',
                                   },
-                                  credentials: 'include'
+                                  credentials: 'include',
                                 }
                               )
 
@@ -261,9 +261,9 @@ const logout = async () => {
     await fetch(`https://api.announce.triamudom.ac.th:1323/logout`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      credentials: 'include'
+      credentials: 'include',
     })
   } finally {
     Router.push('/')
