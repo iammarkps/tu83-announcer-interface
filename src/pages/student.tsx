@@ -143,7 +143,7 @@ export default ({ user, setRefetch, fetchError }) => {
                       <ModalBody>
                         <List styleType="disc">
                           <ListItem>
-                            รายงานตัวและยืนยันออนไลน์วันที่ 1 - 7 พฤษภาคม 2563{' '}
+                            รายงานตัวและยืนยันออนไลน์วันที่ 8 - 14 พฤษภาคม 2563{' '}
                           </ListItem>
                           <ListItem>
                             ชำระเงินค่าบำรุงการศึกษา จำนวน 6,450 บาท
